@@ -8,6 +8,7 @@
                 <th>Id</th>
                 <th>Task</th>
                 <th>Status</th>
+                <th>Action</th>
             </tr>
             </thead>
     <tbody>
@@ -17,6 +18,8 @@
             <td>@todo.id</td>
             <td>@todo.title</td>
             <td>@(todo.completed ? "Complete": "Not Complete")</td>
+            <td><button class=@(todo.completed ? "btn btn-primary btn-sm" : "btn btn-danger btn-sm") @onclick="() => MarkComplete(todo)">@(todo.completed ? "Mark Incomplete" : "Mark Complete")</button></td>
+
         </tr>
     }
     </tbody>
@@ -27,6 +30,11 @@
     protected override async Task OnInitializedAsync()
     {
         todos = await TodoLoader.GetTodos();
+    }
+
+    private async Task MarkComplete(Todo todo)
+    {
+        todo.completed = !todo.completed;
     }
 
 }
